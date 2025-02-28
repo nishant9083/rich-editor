@@ -1,22 +1,33 @@
 {
-  "name": "rich-editor",
-  "version": "0.1.0",
-  "description": "A fully customizable rich text editor based on Tiptap",
+  "name": "@nishant_verma/rich-editor",
+  "version": "1.0.0",
+  "description": "A highly customizable rich text editor for React applications built on top of TipTap",
   "main": "dist/index.js",
-  "module": "dist/index.esm.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "vite examples",
-    "test": "jest",
-    "lint": "eslint src/**/*.{ts,tsx}"
+    "test": "vitest",
+    "test:watch": "vitest watch",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src/**/*.{ts,tsx}",
+    "prepare": "npm run build"
   },
   "peerDependencies": {
-    "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.0.9",
+    "@tailwindcss/vite": "^4.0.9",
     "@tiptap/core": "^2.11.5",
     "@tiptap/extension-code-block-lowlight": "^2.11.5",
     "@tiptap/extension-color": "^2.11.5",
@@ -25,6 +36,10 @@
     "@tiptap/extension-link": "^2.11.5",
     "@tiptap/extension-subscript": "^2.11.5",
     "@tiptap/extension-superscript": "^2.11.5",
+    "@tiptap/extension-table": "^2.11.5",
+    "@tiptap/extension-table-cell": "^2.11.5",
+    "@tiptap/extension-table-header": "^2.11.5",
+    "@tiptap/extension-table-row": "^2.11.5",
     "@tiptap/extension-task-item": "^2.11.5",
     "@tiptap/extension-task-list": "^2.11.5",
     "@tiptap/extension-text-align": "^2.11.5",
@@ -33,37 +48,56 @@
     "@tiptap/pm": "^2.11.5",
     "@tiptap/react": "^2.11.5",
     "@tiptap/starter-kit": "^2.11.5",
+    "autoprefixer": "^10.4.20",
     "classnames": "^2.5.1",
     "lowlight": "^3.3.0",
     "lucide-react": "^0.476.0",
-    "react-icons": "^5.5.0"
+    "path": "^0.12.7",
+    "postcss": "^8.5.3",
+    "react-icons": "^5.5.0",
+    "tslib": "^2.8.1"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.2",
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-typescript": "^12.1.2",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.2.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^22.13.5",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@typescript-eslint/eslint-plugin": "^8.25.0",
     "@typescript-eslint/parser": "^8.25.0",
-    "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.21.0",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^5.1.0",
+    "jsdom": "^26.0.0",
     "rollup": "^4.34.8",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
     "tailwindcss": "^4.0.9",
     "typescript": "^5.7.3",
-    "vite": "^5.0.12"
+    "vite": "^6.2.0",
+    "vitest": "^3.0.7"
   },
   "keywords": [
+    "react",
     "editor",
-    "tiptap",
-    "rich-text",
+    "rich text",
     "wysiwyg",
-    "react"
+    "tiptap",
+    "typescript"
   ],
-  "author": "Your Name",
-  "license": "MIT"
+  "author": "Nishant Verma",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nishant9083/rich-editor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nishant9083/rich-editor/issues"
+  },
+  "homepage": "https://github.com/nishant9083/rich-editor#readme"
 }

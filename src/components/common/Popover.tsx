@@ -8,19 +8,8 @@ interface PopoverProps {
 }
 
 const Popover: React.FC<PopoverProps> = ({ isOpen, onClose, children, trigger }) => {
-  const [position, setPosition] = useState({ top: 0, left: 0 });
   const triggerRef = useRef<HTMLDivElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (isOpen && triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect();
-      setPosition({
-        top: rect.bottom + window.scrollY + 5,
-        left: rect.left + window.scrollX,
-      });
-    }
-  }, [isOpen]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -50,7 +39,12 @@ const Popover: React.FC<PopoverProps> = ({ isOpen, onClose, children, trigger })
         <div
           ref={popoverRef}
           className="fixed z-50 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 dark:text-white"
-          style={{ top: position.top, left: position.left }}
+          style={{
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)'
+          }}
         >
           {children}
         </div>
@@ -59,4 +53,4 @@ const Popover: React.FC<PopoverProps> = ({ isOpen, onClose, children, trigger })
   );
 };
 
-export default Popover; 
+export default Popover;

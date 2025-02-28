@@ -17,8 +17,6 @@ const ImageResizer: React.FC<ImageResizerProps> = ({ editor, imageElement }) => 
   useEffect(() => {
     const style = window.getComputedStyle(imageElement);
     const float = style.getPropertyValue('float');
-    const display = style.getPropertyValue('display');
-    const margin = style.getPropertyValue('margin');
 
     if (float === 'left') setAlignment('left');
     else if (float === 'right') setAlignment('right');

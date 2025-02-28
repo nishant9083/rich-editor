@@ -1,6 +1,5 @@
 import { Editor } from '@tiptap/core';
-
-export type Theme = 'light' | 'dark' | 'system';
+import React from 'react';
 
 export interface EditorProps {
   content?: string;
@@ -12,7 +11,6 @@ export interface EditorProps {
   onBlur?: (editor: Editor) => void;
   onFocus?: (editor: Editor) => void;
   showToolbar?: boolean;
-  theme?: Theme;
 }
 
 export interface ToolbarButtonProps {

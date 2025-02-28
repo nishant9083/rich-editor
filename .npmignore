@@ -1,0 +1,62 @@
+# Source files
+src/
+examples/
+tests/
+__tests__/
+coverage/
+
+# Config files
+.eslintrc
+.prettierrc
+.babelrc
+rollup.config.js
+tsconfig.json
+vitest.config.ts
+setupTests.ts
+.eslintignore
+.gitignore
+.npmignore
+
+# Editor directories and files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Development files
+*.log
+*.tgz
+.DS_Store
+.env
+.env.*
+
+# Dependencies
+node_modules/
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
+
+# Documentation and assets
+docs/
+assets/
+.github/
+CONTRIBUTING.md
+CHANGELOG.md
+
+# Build artifacts
+dist/
+build/
+*.tsbuildinfo
+
+# Test files
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+__snapshots__/
+*.snap
+
+# Temporary files
+*.tmp
+*.temp
+.cache/ 

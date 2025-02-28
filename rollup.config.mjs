@@ -3,8 +3,12 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
+import tailwindcss from '@tailwindcss/postcss';
+import autoprefixer from 'autoprefixer';
 
-const packageJson = require('./package.json');
+const packageJson = await import('./package.json', {
+  assert: { type: 'json' }
+}).then(module => module.default);
 
 export default {
   input: 'src/index.ts',
@@ -26,14 +30,17 @@ export default {
     commonjs(),
     typescript({ tsconfig: './tsconfig.json' }),
     postcss({
+      plugins: [
+        tailwindcss(),
+        autoprefixer(),
+      ],
       config: {
-        path: './postcss.config.js',
+        path: './postcss.config.mjs',
       },
       extensions: ['.css'],
       minimize: true,
-      inject: {
-        insertAt: 'top',
-      },
+      inject: true,
+      extract: "styles.css",
     }),
   ],
 }; 
