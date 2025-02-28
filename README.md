@@ -13,6 +13,7 @@ A highly customizable rich text editor for React applications built on top of Ti
   - [Features](#features)
   - [Demo](#demo)
   - [Installation](#installation)
+- [Using npm](#using-npm)
 - [Using yarn](#using-yarn)
 - [Using pnpm](#using-pnpm)
   - [Usage](#usage)
@@ -71,11 +72,14 @@ This rich text editor provides a powerful, extensible editing experience with a 
 
 This package requires React 18 and Tailwind CSS as peer dependencies.
 
+# Using npm
+`npm install @nishant_verma/rich-editor`
+
 # Using yarn
-`yarn add rich-editor`
+`yarn add @nishant_verma/rich-editor`
 
 # Using pnpm
-`pnpm add rich-editor`
+`pnpm add @nishant_verma/rich-editor`
 
 
 ## Usage
