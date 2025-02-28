@@ -3,7 +3,7 @@
 A highly customizable rich text editor for React applications built on top of TipTap. Features a modern UI, dark mode support, and extensive formatting options.
 
 [![NPM Version](https://img.shields.io/npm/v/rich-editor)](https://www.npmjs.com/package/rich-editor)
-[![License](https://img.shields.io/npm/l/rich-editor)](https://github.com/yourusername/your-repo/blob/main/LICENSE)
+[![License](https://img.shields.io/npm/l/rich-editor)](https://github.com/nishant9083/rich-editor/blob/main/LICENSE)
 
 ## Table of Contents
 
