@@ -11,6 +11,7 @@ export interface EditorProps {
   onBlur?: (editor: Editor) => void;
   onFocus?: (editor: Editor) => void;
   showToolbar?: boolean;
+  toolbarClassName?: string;
 }
 
 export interface ToolbarButtonProps {

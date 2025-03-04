@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import { useEditor, EditorContent } from '@tiptap/react';
+import { useEditor, EditorContent, isNodeActive } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
 import TextAlign from '@tiptap/extension-text-align';
 import Underline from '@tiptap/extension-underline';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import Highlight from '@tiptap/extension-highlight';
-import { createLowlight } from 'lowlight';
 import { CustomImage } from '../extensions/CustomImage';
 import { EditorProps } from '../types';
 import Toolbar from './Toolbar/index';
@@ -21,6 +20,11 @@ import Table from '@tiptap/extension-table';
 import TableRow from '@tiptap/extension-table-row';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
+import { lowlight } from './code-highlight/languages';
+import { codeTheme } from './code-highlight/theme';
+import { Plugin, PluginKey } from '@tiptap/pm/state';
+import { Decoration, DecorationSet } from '@tiptap/pm/view';
+import { Node } from '@tiptap/pm/model';
 
 const RichEditor: React.FC<EditorProps> = ({
   content = '',
@@ -32,6 +36,7 @@ const RichEditor: React.FC<EditorProps> = ({
   onBlur,
   onFocus,
   showToolbar = true,
+  toolbarClassName
 }) => {
   const editor = useEditor({
     extensions: [
@@ -64,11 +69,18 @@ const RichEditor: React.FC<EditorProps> = ({
             class: 'pl-1',
           },
         },
+        heading: {
+          HTMLAttributes: {
+            class: '',            
+          },
+          levels: [1, 2, 3, 4, 5, 6],        
+        },
       }),
       Highlight.configure({
         HTMLAttributes: {
           class: 'p-1 rounded-md',
         },
+        multicolor: true,        
       }),
       Link.configure({
         openOnClick: 'whenNotEditable',
@@ -76,25 +88,75 @@ const RichEditor: React.FC<EditorProps> = ({
           class: 'text-blue-500 cursor-pointer',
         },
       }),
-      CodeBlockLowlight.configure({
-        lowlight: createLowlight(),
+      CodeBlockLowlight.extend({
+        addKeyboardShortcuts() {
+          return {
+            ...this.parent?.(),
+            Tab: ({ editor }) => {
+              const { state, view } = editor;
+              if (isNodeActive(editor.state, this.type)) {
+                view.dispatch(state.tr.insertText('\t'));
+                return true;
+              }
+              return false;
+            },
+          };
+        },
+        addProseMirrorPlugins() {
+          const plugins = this.parent?.() || [];
+          return [
+            ...plugins,
+            new Plugin({
+              key: new PluginKey('codeblock-styling'),
+              props: {
+                decorations: (state: any) => {
+                  const { doc } = state;
+                  const decorations: Decoration[] = [];
+
+                  doc.descendants((node: Node, pos: number) => {
+                    if (node.type.name === 'codeBlock') {
+                      const dom = document.createElement('div');
+                      Object.entries(codeTheme).forEach(([selector, styles]) => {
+                        const style = document.createElement('style');
+                        style.textContent = `${selector} { ${Object.entries(styles)
+                          .map(([prop, value]) => `${prop}: ${value};`)
+                          .join(' ')} }`;
+                        dom.appendChild(style);
+                      });
+                      
+                      decorations.push(
+                        Decoration.widget(pos, dom)
+                      );
+                    }
+                  });
+
+                  return DecorationSet.create(doc, decorations);
+                },
+              },
+            }),
+          ];
+        },
+      }).configure({
+        lowlight,
         exitOnTripleEnter: true,
         defaultLanguage: 'javascript',
         HTMLAttributes: {
-          class:
-            'dark:bg-[#1e242a] dark:text-white bg-[#f0f1f2] text-black rounded-md p-1',
+          class: 'dark:bg-[#1e242a] dark:text-white bg-[#f0f1f2] text-black rounded-md p-1 prose-pre:p-0 overflow-x-auto scrollbar-hide',
+          spellcheck: 'false',
         },
       }),
       CustomImage.configure({
         HTMLAttributes: {
-          class: 'cursor-pointer max-w-full',
+          class: '',
+          draggable: false,          
         },
-        allowBase64: true,
-        inline: true,
+        allowBase64: true,        
       }),
       Underline,
       TextAlign.configure({
         types: ['heading', 'paragraph'],
+        alignments: ['left', 'center', 'right'],
+        defaultAlignment: 'left',
       }),
       TextStyle,
       Color.configure({
@@ -132,8 +194,10 @@ const RichEditor: React.FC<EditorProps> = ({
       }),
       Table.configure({
         resizable: true,
+        cellMinWidth: 100,
+        lastColumnResizable: false,
         HTMLAttributes: {
-          class: 'border-collapse table-auto w-full',
+          class: 'border-collapse table-auto w-fit-content',
         },
       }),
       TableRow.configure({
@@ -144,7 +208,7 @@ const RichEditor: React.FC<EditorProps> = ({
       TableHeader.configure({
         HTMLAttributes: {
           class:
-            'border-b dark:border-gray-600 bg-gray-100 dark:bg-gray-700 font-medium',
+            'border-b dark:border-gray-600 dark:text-white bg-gray-100 dark:bg-gray-700 font-medium',
         },
       }),
       TableCell.configure({
@@ -176,7 +240,7 @@ const RichEditor: React.FC<EditorProps> = ({
         },
       },
       attributes: {
-        class: 'focus:outline-none min-h-[300px] dark:bg-[#292a2c]',
+        class: 'focus:outline-none min-h-[300px] ',
       },     
     },
     enableContentCheck: true,
@@ -192,7 +256,7 @@ const RichEditor: React.FC<EditorProps> = ({
         ...editor.options.editorProps,
         attributes: {
           class:
-            'focus:outline-none min-h-[300px] dark:bg-[#292a2c] dark:text-white',
+            'focus:outline-none min-h-[300px]',
         },
       },
     });
@@ -204,13 +268,16 @@ const RichEditor: React.FC<EditorProps> = ({
 
   return (
     <div
-      className={`rich-editor ${className} dark:bg-[#292a2c] dark:text-white dark:border-gray-600 border rounded-lg`}
+      className={'rich-editor dark:bg-[#292a2c] dark:text-white dark:border-gray-600 border rounded-lg'}
     >
-      {showToolbar && <Toolbar editor={editor} />}
+      {showToolbar && <Toolbar className={toolbarClassName} editor={editor} />}
       <EditorContent
         placeholder={placeholder}
         editor={editor}
-        className="prose max-w-none p-4 focus:outline-none"
+        className={`rich-editor-content px-8 max-w-none p-4 focus:outline-none ${className} rounded-lg overflow-y-auto rich-editor-scrollbar`}
+        onFocus={() => {
+          
+        }}
       />
     </div>
   );

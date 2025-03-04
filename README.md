@@ -28,7 +28,6 @@ A highly customizable rich text editor for React applications built on top of Ti
   - [License](#license)
   - [Acknowledgements](#acknowledgements)
   - [Support](#support)
-
 ## Overview
 
 This rich text editor provides a powerful, extensible editing experience with a clean, modern interface. Built using TipTap and React, it offers a wide range of formatting options and features while maintaining excellent performance and reliability.
@@ -66,7 +65,9 @@ This rich text editor provides a powerful, extensible editing experience with a 
 
 ## Demo
 
-![Image](./images/image.png)
+![Image](./images/image1.png)
+
+![Image](./images/image2.png)
 
 ## Installation
 
@@ -142,7 +143,8 @@ function App() {
 | placeholder | string | 'Start writing...' | Placeholder text when editor is empty |
 | editable | boolean | true | Whether the editor is editable |
 | autofocus | boolean | false | Whether to focus the editor on mount |
-| className | string | '' | Additional CSS classes |
+| className | string | '' | Additional CSS classes for editor |
+| toolbarClassName | String | '' | Additional Css for toolbar |
 | showToolbar | boolean | true | Whether to show the toolbar |
 | onUpdate | function | undefined | Callback when content changes |
 | onBlur | function | undefined | Callback when editor loses focus |
@@ -195,6 +197,16 @@ The editor uses Tailwind CSS for styling. You can customize the appearance by:
   --editor-bg: #ffffff;
   --editor-text: #000000;
   /* ... other variables */
+}
+
+.rich-editor-content {
+  background-color: #fff;
+  color: black;
+}
+
+.rich-editor-toolbar {
+  background-color: white;
+  color: blue;
 }
 ```
 
@@ -267,11 +279,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Support
 
 - Report bugs on our [issue tracker](https://github.com/nishant9083/rich-editor/issues)
+- Feel free to raise issue for new features
 <!-- - Join our [Discord community](https://discord.gg/your-invite)
 - Follow our [Twitter](https://twitter.com/your-handle) for updates -->
 
 ---
 
 Built with ❤️ by [Nishant Verma](https://github.com/nishant9083)
-
-

@@ -56,7 +56,7 @@ const LinkPopover: React.FC<LinkPopoverProps> = ({ editor }) => {
         </ToolbarButton>
       }
     >
-      <div className="p-4 min-w-[300px]">
+      <div className="p-4 min-w-[300px] dark:bg-gray-800 rounded-lg">
         <div className="space-y-4">
           {editor.state.selection.empty && (
             <div>

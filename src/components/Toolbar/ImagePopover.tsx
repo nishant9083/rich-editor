@@ -21,7 +21,7 @@ const ImagePopover: React.FC<ImagePopoverProps> = ({ editor }) => {
         img.onload = () => {
           editor.chain().focus().setImage({
             src: e.target?.result as string,
-            alt: '',
+            alt: img.alt || 'Image',
             title: '',
           }).run();
         };
@@ -38,7 +38,7 @@ const ImagePopover: React.FC<ImagePopoverProps> = ({ editor }) => {
       img.onload = () => {
         editor.chain().focus().setImage({
           src: url,
-          alt: '',
+          alt: 'Image',
           title: ''
         }).run();
       };
@@ -58,7 +58,7 @@ const ImagePopover: React.FC<ImagePopoverProps> = ({ editor }) => {
         </ToolbarButton>
       }
     >
-      <div className="p-4 min-w-[300px]">
+      <div className="p-4 min-w-[300px] dark:bg-gray-800 rounded-lg">
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">

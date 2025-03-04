@@ -1,6 +1,6 @@
 {
   "name": "@nishant_verma/rich-editor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A highly customizable rich text editor for React applications built on top of TipTap",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -9,7 +9,8 @@
   "files": [
     "dist",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "rollup -c",
@@ -50,6 +51,7 @@
     "@tiptap/starter-kit": "^2.11.5",
     "autoprefixer": "^10.4.20",
     "classnames": "^2.5.1",
+    "highlight": "^0.2.4",
     "lowlight": "^3.3.0",
     "lucide-react": "^0.476.0",
     "path": "^0.12.7",

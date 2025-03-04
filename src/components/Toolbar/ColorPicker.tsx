@@ -84,7 +84,7 @@ interface ColorPickerProps {
 const ColorPicker: React.FC<ColorPickerProps> = ({ editor }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const buttonRef = React.useRef<HTMLDivElement>(null);
-
+  const theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   const setColor = (color: string) => {
     editor.chain().focus().setColor(color).run();
     setIsOpen(false);
@@ -125,7 +125,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({ editor }) => {
 
       {isOpen && (
         <div
-          className="fixed z-[9999] bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 p-2 w-48"
+          className={`fixed z-50 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 p-2 w-48 ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}
           style={{
             top:
               buttonRef.current?.getBoundingClientRect().bottom ||
@@ -135,7 +135,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({ editor }) => {
               0 + window.scrollX,
           }}
         >
-          <div className="grid grid-cols-4 gap-1 overflow-y-auto max-h-56">
+          <div className="grid grid-cols-4 gap-1 overflow-y-auto max-h-56 rich-editor-scrollbar">
             {colors.map((color) => (
               <button
                 key={color.name}
